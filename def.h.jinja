@@ -23,12 +23,13 @@
 
 {% set sys_headers = sys_headers.split() %}
 {% set rel_headers = rel_headers.split() %}
-{% set typeclasses = typeclasses.split() %}
 
 
 #ifndef {{include_guard}}
 #define {{include_guard}}
 
+
+#include <libtypes/types.h>
 
 {% for path in sys_headers %}
 #include <{{path}}>
@@ -39,66 +40,10 @@
 {% endfor %}
 
 
-Maybe_{{typename}}
-maybe_{{funcname}}__nothing(
-        void );
-
-
-Maybe_{{typename}}
-maybe_{{funcname}}__nothing_v(
-        {{type}} );
-
-
-Maybe_{{typename}}
-maybe_{{funcname}}__value(
-        {{type}} );
-
-
-bool
-maybe_{{funcname}}__is_nothing(
-        Maybe_{{typename}} );
-
-
-bool
-maybe_{{funcname}}__is_value(
-        Maybe_{{typename}} );
-
-
-{{type}}
-maybe_{{funcname}}__value_or(
-        Maybe_{{typename}},
-        {{type}} or );
-
-
-
-{% macro typeclass_header(name) -%}
-///////////////////////////////////
-/// TYPECLASS: {{name}}
-///////////////////////////////////
-{%- endmacro %}
-
-{% macro typeclass(name) -%}
-{% if name in typeclasses %}
-{{ typeclass_header(name) }}
-{{ caller() }}
-{% endif %}
-{%- endmacro %}
-
-
-{% call typeclass('EQ') %}
-
-bool
-maybe_{{funcname}}__equal(
-        Maybe_{{typename}},
-        Maybe_{{typename}} );
-
-
-bool
-maybe_{{funcname}}__not_equal(
-        Maybe_{{typename}},
-        Maybe_{{typename}} );
-
-{% endcall %}
+typedef struct maybe_{{funcname}} {
+    {{type}} value;
+    bool nothing;
+} Maybe_{{typename}};
 
 
 #endif // ifndef {{ include_guard }}
