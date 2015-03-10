@@ -17,34 +17,35 @@
 // along with Libmaybe. If not, see <https://gnu.org/licenses/>.
 
 
-// This file is the result of running:
-//     {{' '.join(argv)}}
+// This file is the result of rendering:
+//
+//     {{template_path}}
+//
+// You should make changes to this file by tuning the build process, or (at a
+// stretch) modifying the generation script or template file; not by editing
+// this file as-is.
 
 
-{% set sys_headers = sys_headers.split() %}
-{% set rel_headers = rel_headers.split() %}
+#ifndef LIBMAYBE_DEF_MAYBE_{{macroname}}_H
+#define LIBMAYBE_DEF_MAYBE_{{macroname}}_H
 
 
-#ifndef {{include_guard}}
-#define {{include_guard}}
+#include <libtypes/types.h>     // bool
 
-
-#include <libtypes/types.h>
-
-{% for path in sys_headers %}
-#include <{{path}}>
-{% endfor %}
-
-{% for path in rel_headers %}
-#include "{{path}}"
-{% endfor %}
+{% if type_def_header %}
+#include <{{type_def_header}}>
+{% endif %}
 
 
 typedef struct maybe_{{funcname}} {
+{% if value_member %}
+    {{value_member}};
+{% else %}
     {{type}} value;
+{% endif %}
     bool nothing;
 } Maybe_{{typename}};
 
 
-#endif // ifndef {{ include_guard }}
+#endif // ifndef LIBMAYBE_DEF_MAYBE_{{macroname}}_H
 

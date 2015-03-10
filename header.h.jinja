@@ -17,26 +17,22 @@
 // along with Libmaybe. If not, see <https://gnu.org/licenses/>.
 
 
-// This file is the result of running:
-//     {{' '.join(argv)}}
+// This file is the result of rendering:
+//
+//     {{template_path}}
+//
+// You should make changes to this file by tuning the build process, or (at a
+// stretch) modifying the generation script or template file; not by editing
+// this file as-is.
 
 
-{% set sys_headers = sys_headers.split() %}
-{% set rel_headers = rel_headers.split() %}
-{% set typeclasses = typeclasses.split() %}
+#ifndef LIBMAYBE_MAYBE_{{macroname}}_H
+#define LIBMAYBE_MAYBE_{{macroname}}_H
 
 
-#ifndef {{include_guard}}
-#define {{include_guard}}
+#include <libtypes/types.h>
 
-
-{% for path in sys_headers %}
-#include <{{path}}>
-{% endfor %}
-
-{% for path in rel_headers %}
-#include "{{path}}"
-{% endfor %}
+#include "{{def_path}}"
 
 
 Maybe_{{typename}}
@@ -70,6 +66,46 @@ maybe_{{funcname}}__value_or(
         {{type}} or );
 
 
+Maybe_{{typename}}
+maybe_{{funcname}}__applied(
+        Maybe_{{typename}},
+        {{type}} ( * f )( {{type}} ) );
+
+
+void
+maybe_{{funcname}}__apply(
+        Maybe_{{typename}} *,
+        {{type}} ( * f )( {{type}} ) );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__applied2(
+        Maybe_{{typename}},
+        Maybe_{{typename}},
+        {{type}} ( * f )( {{type}}, {{type}} ) );
+
+
+void
+maybe_{{funcname}}__apply2(
+        Maybe_{{typename}} *,
+        Maybe_{{typename}},
+        {{type}} ( * f )( {{type}}, {{type}} ) );
+
+
+bool
+maybe_{{funcname}}__equal_by(
+        Maybe_{{typename}},
+        Maybe_{{typename}},
+        bool ( * eq )( {{type}}, {{type}} ) );
+
+
+ord
+maybe_{{funcname}}__compare_by(
+        Maybe_{{typename}},
+        Maybe_{{typename}},
+        ord ( * cmp )( {{type}}, {{type}} ) );
+
+
 
 {% macro typeclass_header(name) -%}
 ///////////////////////////////////
@@ -100,6 +136,99 @@ maybe_{{funcname}}__not_equal(
 
 {% endcall %}
 
+{% call typeclass('ORD') %}
 
-#endif // ifndef {{ include_guard }}
+ord
+maybe_{{funcname}}__compare(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+bool
+maybe_{{funcname}}__less_than(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+bool
+maybe_{{funcname}}__less_than_or_eq(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+bool
+maybe_{{funcname}}__greater_than_or_eq(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+bool
+maybe_{{funcname}}__greater_than(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__min2(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__max2(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__min_n(
+        Maybe_{{typename}} const * ms,
+        size_t n );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__max_n(
+        Maybe_{{typename}} const * ms,
+        size_t n );
+
+
+// @public
+#define maybe_{{funcname}}__min( ... ) \
+    maybe_{{funcname}}__min_n( \
+        ( Maybe_{{typename}}[] ){ __VA_ARGS__ }, \
+        NELEM( ( Maybe_{{typename}}[] ){ __VA_ARGS__ } ) )
+
+
+// @public
+#define maybe_{{funcname}}__max( ... ) \
+    maybe_{{funcname}}__max_n( \
+        ( Maybe_{{typename}}[] ){ __VA_ARGS__ }, \
+        NELEM( ( Maybe_{{typename}}[] ){ __VA_ARGS__ } ) )
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__clamp(
+        Maybe_{{typename}} lower,
+        Maybe_{{typename}} upper,
+        Maybe_{{typename}} x );
+
+
+bool
+maybe_{{funcname}}__in_range(
+        Maybe_{{typename}} lower,
+        Maybe_{{typename}} upper,
+        Maybe_{{typename}} x );
+
+
+bool
+maybe_{{funcname}}__in_xrange(
+        Maybe_{{typename}} lower,
+        Maybe_{{typename}} upper,
+        Maybe_{{typename}} x );
+
+{% endcall %}
+
+
+#endif // ifndef LIBMAYBE_MAYBE_{{macroname}}_H
+
 

@@ -1,5 +1,4 @@
-*.c
-*.h
-*.o
-*.dep.mk
+tests/maybe
+tests/test
+tests/.gen
 deps
