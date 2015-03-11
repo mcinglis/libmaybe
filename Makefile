@@ -49,15 +49,14 @@ tests/test: \
     $(DEPS_DIR)/libbase/int.o \
     $(DEPS_DIR)/libbase/ptr.o
 
+int_type := int
 ptr_type := void const *
-
-int_typeclasses := EQ ORD
-ptr_typeclasses := EQ ORD
 
 .PRECIOUS: tests/maybe/%
 tests/maybe/%.c: gentype $(templates)
-	$(eval n := $(subst -,_,$(basename $*)))
-	./gentype "$(or $($(n)_type),$n)" --typeclasses $($(n)_typeclasses) --type-func-header "libbase/$n.h" --output-dir tests/maybe
+	$(eval p := $(basename $*))
+	$(eval n := $(subst -,_,$p))
+	./gentype "$($(n)_type)" --typeclasses EQ ORD --type-func-header "libbase/$p.h" --output-dir tests/maybe
 
 
 .PHONY: clean
