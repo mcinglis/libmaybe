@@ -31,8 +31,14 @@
 
 
 #include <libtypes/types.h>
+{% for p in sys_headers %}
+#include <{{p}}>
+{% endfor %}
 
-#include "{{def_path}}"
+#include "def/maybe-{{filename}}.h"
+{% for path in rel_headers %}
+#include "{{p}}"
+{% endfor %}
 
 
 Maybe_{{typename}}

@@ -30,15 +30,18 @@
 #define LIBMAYBE_DEF_MAYBE_{{macroname}}_H
 
 
-#include <libtypes/types.h>     // bool
+#include <libtypes/types.h>
+{% for p in sys_headers %}
+#include <{{p}}>
+{% endfor %}
 
-{% if type_def_header %}
-#include <{{type_def_header}}>
-{% endif %}
+{% for path in rel_headers %}
+#include "{{p}}"
+{% endfor %}
 
 
 typedef struct maybe_{{funcname}} {
-{% if value_member %}
+{% if value_member is defined %}
     {{value_member}};
 {% else %}
     {{type}} value;

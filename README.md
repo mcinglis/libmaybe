@@ -1,7 +1,7 @@
 
-**Libmaybe** provides a struct that represents "some value or nothing", and simple functions for working with that, for each of the standard types. It's similar to the `Maybe` type in Haskell, or the `Option` type in Rust.
+**Libmaybe** provides Jinja templates that can be rendered to C source files implementing a struct that represents "some value or nothing". It's similar to the `Maybe` type in Haskell, or the `Option` type in Rust.
 
-Each header file is generated from [`header.h.jinja`](header.h.jinja), and each source file is generated from [`source.c.jinja`](source.c.jinja) (requiring Python 2). You can easily adapt the build process into your own project to generate `Maybe` structs of your own types.
+The build process of the source files for the `tests/test` binary might be the same approach you take for your own project (but you can render the templates however you want).
 
 
 ## Releases
@@ -25,7 +25,7 @@ There's nothing magic to what Puck does, so if you would prefer, you can set up 
 
 ## Collaboration
 
-Libmaybe is available at [Gitorious](https://gitorious.org/mcinglis/libmaybe), [Bitbucket](https://bitbucket.org/mcinglis/libmaybe), and [GitHub](https://github.com/mcinglis/libmaybe).
+Libmaybe is available at [Bitbucket](https://bitbucket.org/mcinglis/libmaybe) and [GitHub](https://github.com/mcinglis/libmaybe).
 
 Questions, discussion, bug reports and feature requests are welcome at [the GitHub issue tracker](https://github.com/mcinglis/libmaybe/issues), or via [emails](mailto:me@minglis.id.au).
 

@@ -1,4 +1,7 @@
-tests/maybe
+*.c
+*.h
+*.o
+*.dep.mk
 tests/test
-tests/.gen
+!tests/test.c
 deps
