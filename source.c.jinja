@@ -39,6 +39,14 @@
 
 
 Maybe_{{typename}}
+maybe_{{funcname}}__id(
+        Maybe_{{typename}} const m )
+{
+    return m;
+}
+
+
+Maybe_{{typename}}
 maybe_{{funcname}}__nothing( void )
 {
     return ( Maybe_{{typename}} ){ .nothing = true };
