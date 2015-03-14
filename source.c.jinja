@@ -148,13 +148,13 @@ bool
 maybe_{{funcname}}__equal_by(
         Maybe_{{typename}} const x,
         Maybe_{{typename}} const y,
-        bool ( * const eq )( {{type}}, {{type}} ) )
+        bool ( * const f )( {{type}} xv, {{type}} yv ) )
 {
-    ASSERT( eq != NULL );
+    ASSERT( f != NULL );
 
     return ( x.nothing != y.nothing ) ? false
          : ( x.nothing && y.nothing ) ? true
-                                      : eq( x.value, y.value );
+                                      : f( x.value, y.value );
 }
 
 
@@ -162,11 +162,11 @@ ord
 maybe_{{funcname}}__compare_by(
         Maybe_{{typename}} const x,
         Maybe_{{typename}} const y,
-        ord ( * const cmp )( {{type}}, {{type}} ) )
+        ord ( * const f )( {{type}} xv, {{type}} yv ) )
 {
-    ASSERT( cmp != NULL );
+    ASSERT( f != NULL );
 
-    return ( !x.nothing && !y.nothing ) ? cmp( x.value, y.value )
+    return ( !x.nothing && !y.nothing ) ? f( x.value, y.value )
                                         : y.nothing - x.nothing;
 }
 

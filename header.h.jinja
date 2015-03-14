@@ -105,16 +105,16 @@ maybe_{{funcname}}__apply2(
 
 bool
 maybe_{{funcname}}__equal_by(
-        Maybe_{{typename}},
-        Maybe_{{typename}},
-        bool ( * eq )( {{type}}, {{type}} ) );
+        Maybe_{{typename}} x,
+        Maybe_{{typename}} y,
+        bool ( * f )( {{type}} xv, {{type}} yv ) );
 
 
 ord
 maybe_{{funcname}}__compare_by(
-        Maybe_{{typename}},
-        Maybe_{{typename}},
-        ord ( * cmp )( {{type}}, {{type}} ) );
+        Maybe_{{typename}} x,
+        Maybe_{{typename}} y,
+        ord ( * f )( {{type}} xv, {{type}} yv ) );
 
 
 

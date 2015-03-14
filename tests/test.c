@@ -4,8 +4,10 @@
 #include <libmacro/assert.h>
 
 #include <libbase/ulong.h>
+#include <libbase/intmax.h>
 
 #include "../maybe-ulong.h"
+#include "../maybe-intmax.h"
 #include "../maybe-ptr-ptr-char.h"
 
 
@@ -40,6 +42,41 @@ test_maybe_ulong( void )
         maybe_ulong__equal( maybe_ulong__min2( x, y ), x ),
         maybe_ulong__is_nothing( maybe_ulong__min( x, y, z ) ),
         maybe_ulong__equal( maybe_ulong__max( x, y, z ), y )
+    );
+}
+
+
+static
+void
+test_maybe_intmax( void )
+{
+    Maybe_intmax x = { .value = 5 };
+    Maybe_intmax y = { .value = 78 };
+    Maybe_intmax z = { .nothing = true };
+
+    ASSERT(
+        !maybe_intmax__is_nothing( x ),
+        maybe_intmax__is_value( x ),
+        !maybe_intmax__is_nothing( y ),
+        maybe_intmax__is_value( y ),
+        maybe_intmax__is_nothing( z ),
+        !maybe_intmax__is_value( z ),
+        maybe_intmax__value_or( x, 888 ) == x.value,
+        maybe_intmax__value_or( y, 888 ) == y.value,
+        maybe_intmax__value_or( z, 888 ) == 888,
+        maybe_intmax__equal( maybe_intmax__applied( x, intmax__succ ),
+                          ( Maybe_intmax ){ .value = x.value + 1 } ),
+        maybe_intmax__equal( maybe_intmax__applied2( x, y, intmax__add ),
+                          ( Maybe_intmax ){ .value = x.value + y.value } ),
+        maybe_intmax__equal( maybe_intmax__applied2( x, z, intmax__sub ),
+                          ( Maybe_intmax ){ .nothing = true } ),
+        maybe_intmax__compare( x, y ) == LT,
+        maybe_intmax__compare( y, x ) == GT,
+        maybe_intmax__compare( x, z ) == GT,
+        maybe_intmax__compare( x, x ) == EQ,
+        maybe_intmax__equal( maybe_intmax__min2( x, y ), x ),
+        maybe_intmax__is_nothing( maybe_intmax__min( x, y, z ) ),
+        maybe_intmax__equal( maybe_intmax__max( x, y, z ), y )
     );
 }
 
@@ -82,6 +119,8 @@ main( void )
 {
     test_maybe_ulong();
     printf( "All `ulong` assertions passed.\n" );
+    test_maybe_intmax();
+    printf( "All `intmax` assertions passed.\n" );
     test_maybe_ptr_ptr_char();
     printf( "All `ptr_ptr_char` assertions passed.\n" );
 }

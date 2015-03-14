@@ -1,19 +1,19 @@
 
 **Libmaybe** provides Jinja templates that can be rendered to C source files implementing a struct that represents "some value or nothing". It's similar to the `Maybe` type in Haskell, or the `Option` type in Rust.
 
-The build process of the source files for the `tests/test` binary might be the same approach you take for your own project (but you can render the templates however you want).
+You can adapt the template rendering into your project's build process in whichever way you prefer. In my projects, I render the templates for types as I need them, with the typeclasses that I require for each type. See the build process of the tests for Libmaybe as a basic example of how you could handle the rendering in your own project.
 
 
 ## Releases
 
-I'll tag the releases according to [semantic versioning](http://semver.org/spec/v2.0.0.html). All the macros preceded by `// @public` are considered public: they'll only change between major versions. The other macros could change any time. Non-preprocessor identifiers defined in header files are always considered public. New identifiers prefixed with `maybe` (any case) will not warrant a major version bump.
+The releases are tagged according to [semantic versioning](http://semver.org/spec/v2.0.0.html). All the macros preceded by `// @public` are considered public: they'll only change between major versions. The other macros could change any time. Non-preprocessor identifiers defined in header files are always considered public. New identifiers in the templates prefixed with `maybe` (any case) will not warrant a major version bump.
 
 Every version tag will be signed with [my GPG key](http://pool.sks-keyservers.net/pks/lookup?op=vindex&search=0xD020F814) (fingerprint: `0xD020F814`).
 
 
 ## Dependencies
 
-`Package.json` specifies the dependencies of Libmaybe: where to get them, and what version to use. I've developed a tool called [Puck](https://gitorious.org/mcinglis/puck) that will parse such a `Package.json`, download the specified repositories, check out the specified version, and, if the dependency has its own `Package.json`, repeat that process for *its* dependencies. With `puck` on your PATH, in the directory of Libmaybe:
+`Package.json` specifies the dependencies of Libmaybe: where to get them, and what version to use. I've developed a tool called [Puck](https://bitbucket.org/mcinglis/puck) that will parse such a `Package.json`, download the specified repositories, check out the specified version, and, if the dependency has its own `Package.json`, repeat that process for *its* dependencies. With `puck` on your PATH, in the directory of Libmaybe:
 
 ``` sh
 $ puck update
@@ -42,7 +42,7 @@ Libmaybe is free software: you can redistribute it and/or modify it under the te
 
 Libmaybe is distributed in the hope that it will be useful, but **without any warranty**; without even the implied warranty of **merchantability** or **fitness for a particular purpose**. See the GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU Affero General Public License along with Libmaybe If not, see <https://gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License along with Libmaybe. If not, see <https://gnu.org/licenses/>.
 
 [Contact me](mailto:me@minglis.id.au) for proprietary licensing options.
 
