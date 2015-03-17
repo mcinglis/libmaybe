@@ -1,8 +1,5 @@
 {
     "dependencies": [
-        { "repo": [ "https://bitbucket.org/mcinglis/tplrender.git",
-                    "https://github.com/mcinglis/tplrender.git" ]
-        },
         { "repo": [ "https://bitbucket.org/mcinglis/libtypes.git",
                     "https://github.com/mcinglis/libtypes.git",
                     "https://gitorious.org/mcinglis/libtypes.git" ],
@@ -14,6 +11,10 @@
           "tag":  "v2.*"
         },
         { "dev": true,
+          "repo": [ "https://bitbucket.org/mcinglis/tplrender.git",
+                    "https://github.com/mcinglis/tplrender.git" ]
+        },
+        { "dev": true,
           "repo": [ "https://bitbucket.org/mcinglis/libbase.git",
                     "https://github.com/mcinglis/libbase.git",
                     "https://gitorious.org/mcinglis/libbase.git" ]
@@ -22,6 +23,7 @@
     "commands": {
         "build": "make",
         "fast":  "make fast",
-        "clean": "make clean"
+        "clean": "make clean",
+        "test":  "make test"
     }
 }
