@@ -5,6 +5,8 @@
 
 DEPS_DIR ?= ./deps
 
+LIBBASE ?= $(DEPS_DIR)/libbase
+
 CPPFLAGS += -I$(DEPS_DIR)
 
 cflags_std := -std=c11
@@ -21,10 +23,8 @@ CFLAGS ?= $(cflags_std) -g $(cflags_warnings)
 TPLRENDER ?= $(DEPS_DIR)/tplrender/tplrender
 
 
-name_from_path = $(subst -,_,$(basename $(notdir $1)))
-
-
-test_types := ulong intmax ptr-ptr-char
+test_libmaybe_types := ulong intmax ptr-ptr-char
+test_libbase_types := $(test_libmaybe_types)
 
 ulong_type           := ulong
 ulong_options        := --typeclasses BOUNDED EQ ORD ENUM NUM \
@@ -37,11 +37,11 @@ intmax_options       := --typeclasses BOUNDED EQ ORD ENUM NUM \
 ptr_ptr_char_type    := char const * const *
 ptr_ptr_char_options := --typeclasses EQ ORD
 
-test_libbase_sources := $(foreach t,$(test_types),$(DEPS_DIR)/libbase/$t.c)
+test_libbase_sources := $(foreach t,$(test_libbase_types),$(LIBBASE)/$t.c)
 test_libbase_headers := $(test_libbase_sources:.c=.h)
 test_libbase_objects := $(test_libbase_sources:.c=.o)
 
-test_libmaybe_sources := $(foreach t,$(test_types),maybe-$t.c)
+test_libmaybe_sources := $(foreach t,$(test_libmaybe_types),maybe-$t.c)
 test_libmaybe_headers := $(test_libmaybe_sources:.c=.h)
 test_libmaybe_defs    := $(addprefix def/,$(test_libmaybe_headers))
 test_libmaybe_objects := $(test_libmaybe_sources:.c=.o)
@@ -56,7 +56,7 @@ test_gen := $(test_libbase_sources) \
             $(test_libmaybe_defs) \
             $(test_gen_objects)
 
-test_binaries := tests/test
+test_binaries := $(basename $(wildcard tests/*.c))
 
 mkdeps := $(test_gen_objects:.o=.dep.mk)
 
@@ -67,18 +67,18 @@ mkdeps := $(test_gen_objects:.o=.dep.mk)
 ##############################
 
 .PHONY: all
-all: tests
+all:
 
 .PHONY: fast
 fast: CPPFLAGS += -DNDEBUG
-fast: CFLAGS = $(cflags_std) -O3 $(cflags_warnings)
+fast: CFLAGS = $(cflags_std) -O4 $(cflags_warnings)
 fast: all
 
 .PHONY: tests
 tests: $(test_binaries)
 
 .PHONY: test
-test: tests/test
+test: tests
 	./tests/test
 
 .PHONY: clean
@@ -92,25 +92,31 @@ clean:
 
 tests/test: $(test_gen_objects)
 
-$(test_libbase_headers): %.h: $(DEPS_DIR)/libbase/header.h.jinja
+name_from_path = $(subst -,_,$1)
+
+$(test_libbase_headers): $(LIBBASE)/%.h: $(LIBBASE)/header.h.jinja
 	$(eval n := $(call name_from_path,$*))
 	$(TPLRENDER) $< "$($(n)_type)" $($(n)_options) -o $@
 
-$(test_libbase_sources): %.c: $(DEPS_DIR)/libbase/source.c.jinja %.h
+$(test_libbase_sources): $(LIBBASE)/%.c: $(LIBBASE)/source.c.jinja
 	$(eval n := $(call name_from_path,$*))
 	$(TPLRENDER) $< "$($(n)_type)" $($(n)_options) -o $@
+
+$(test_libbase_objects): $(LIBBASE)/%.o: $(LIBBASE)/%.h
 
 $(test_libmaybe_defs): def/maybe-%.h: def.h.jinja
 	$(eval n := $(call name_from_path,$*))
 	$(TPLRENDER) $< "$($(n)_type)" $($(n)_options) -o $@
 
-$(test_libmaybe_headers): maybe-%.h: header.h.jinja def/maybe-%.h
+$(test_libmaybe_headers): maybe-%.h: header.h.jinja
 	$(eval n := $(call name_from_path,$*))
 	$(TPLRENDER) $< "$($(n)_type)" $($(n)_options) -o $@
 
-$(test_libmaybe_sources): maybe-%.c: source.c.jinja maybe-%.h $(DEPS_DIR)/libbase/%.h
+$(test_libmaybe_sources): maybe-%.c: source.c.jinja
 	$(eval n := $(call name_from_path,$*))
 	$(TPLRENDER) $< "$($(n)_type)" $($(n)_options) --sys-headers "libbase/$*.h" -o $@
+
+$(test_libmaybe_objects): maybe-%.o: maybe-%.h def/maybe-%.h $(LIBBASE)/%.h
 
 
 -include $(mkdeps)
