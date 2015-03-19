@@ -21,8 +21,6 @@
         }
     ],
     "commands": {
-        "build": "make",
-        "fast":  "make fast",
         "clean": "make clean",
         "test":  "make test"
     }

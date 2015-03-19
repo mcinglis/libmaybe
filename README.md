@@ -22,6 +22,8 @@ $ puck execute build
 
 There's nothing magic to what Puck does, so if you would prefer, you can set up the dependencies manually. You just need to have the dependencies in the `deps` directory within the Libmaybe directory, and have them built (if necessary) before building Libmaybe.
 
+There's no `build` command specified for Libmaybe, because you'll be better off managing the building of Libmaybe's object files in your own project. Still, there is a `Makefile` provided with the bare minimum to build the tests. You can use this as an example of how to build the Libmaybe objects in your own project.
+
 
 ## Collaboration
 

@@ -3,7 +3,7 @@
 ### VARIABLES
 ##############################
 
-DEPS_DIR ?= ./deps
+DEPS_DIR ?= deps
 
 LIBBASE ?= $(DEPS_DIR)/libbase
 
@@ -64,7 +64,7 @@ mkdeps := $(test_gen_objects:.o=.dep.mk)
 ##############################
 
 .PHONY: all
-all:
+all: tests
 
 .PHONY: tests
 tests: $(test_binaries)
