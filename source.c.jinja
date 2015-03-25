@@ -300,9 +300,9 @@ maybe_{{funcname}}__max_n(
 
 Maybe_{{typename}}
 maybe_{{funcname}}__clamp(
+        Maybe_{{typename}} const x,
         Maybe_{{typename}} const lower,
-        Maybe_{{typename}} const upper,
-        Maybe_{{typename}} const x )
+        Maybe_{{typename}} const upper )
 {
     return maybe_{{funcname}}__less_than_or_eq( x, lower )    ? lower
          : maybe_{{funcname}}__greater_than_or_eq( x, upper ) ? upper

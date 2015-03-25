@@ -41,7 +41,27 @@ test_maybe_ulong( void )
         maybe_ulong__compare( x, x ) == EQ,
         maybe_ulong__equal( maybe_ulong__min2( x, y ), x ),
         maybe_ulong__is_nothing( maybe_ulong__min( x, y, z ) ),
-        maybe_ulong__equal( maybe_ulong__max( x, y, z ), y )
+        maybe_ulong__equal( maybe_ulong__max( x, y, z ), y ),
+        maybe_ulong__equal(
+                maybe_ulong__clamp( ( Maybe_ulong ){ .nothing = true },
+                                    ( Maybe_ulong ){ .value = 35 },
+                                    ( Maybe_ulong ){ .value = 78 } ),
+                ( Maybe_ulong ){ .value = 35 } ),
+        maybe_ulong__equal(
+                maybe_ulong__clamp( ( Maybe_ulong ){ .value = 0 },
+                                    ( Maybe_ulong ){ .value = 35 },
+                                    ( Maybe_ulong ){ .value = 78 } ),
+                ( Maybe_ulong ){ .value = 35 } ),
+        maybe_ulong__equal(
+                maybe_ulong__clamp( ( Maybe_ulong ){ .value = 56 },
+                                    ( Maybe_ulong ){ .value = 35 },
+                                    ( Maybe_ulong ){ .value = 78 } ),
+                ( Maybe_ulong ){ .value = 56 } ),
+        maybe_ulong__equal(
+                maybe_ulong__clamp( ( Maybe_ulong ){ .value = 978 },
+                                    ( Maybe_ulong ){ .value = 35 },
+                                    ( Maybe_ulong ){ .value = 78 } ),
+                ( Maybe_ulong ){ .value = 78 } )
     );
 }
 
@@ -76,7 +96,27 @@ test_maybe_intmax( void )
         maybe_intmax__compare( x, x ) == EQ,
         maybe_intmax__equal( maybe_intmax__min2( x, y ), x ),
         maybe_intmax__is_nothing( maybe_intmax__min( x, y, z ) ),
-        maybe_intmax__equal( maybe_intmax__max( x, y, z ), y )
+        maybe_intmax__equal( maybe_intmax__max( x, y, z ), y ),
+        maybe_intmax__equal(
+                maybe_intmax__clamp( ( Maybe_intmax ){ .nothing = true },
+                                     ( Maybe_intmax ){ .value = 35 },
+                                     ( Maybe_intmax ){ .value = 78 } ),
+                ( Maybe_intmax ){ .value = 35 } ),
+        maybe_intmax__equal(
+                maybe_intmax__clamp( ( Maybe_intmax ){ .value = -34 },
+                                     ( Maybe_intmax ){ .value = 35 },
+                                     ( Maybe_intmax ){ .value = 78 } ),
+                ( Maybe_intmax ){ .value = 35 } ),
+        maybe_intmax__equal(
+                maybe_intmax__clamp( ( Maybe_intmax ){ .value = 56 },
+                                     ( Maybe_intmax ){ .value = 35 },
+                                     ( Maybe_intmax ){ .value = 78 } ),
+                ( Maybe_intmax ){ .value = 56 } ),
+        maybe_intmax__equal(
+                maybe_intmax__clamp( ( Maybe_intmax ){ .value = 978 },
+                                     ( Maybe_intmax ){ .value = 35 },
+                                     ( Maybe_intmax ){ .value = 78 } ),
+                ( Maybe_intmax ){ .value = 78 } )
     );
 }
 
