@@ -61,6 +61,21 @@ maybe_{{funcname}}__value(
         {{type}} );
 
 
+Maybe_{{typename}}
+maybe_{{funcname}}__from_ptr(
+        {{type}} const * );
+
+
+{{type}} const *
+maybe_{{funcname}}__to_ptr(
+        Maybe_{{typename}} const * );
+
+
+{{type}} *
+maybe_{{funcname}}__to_ptrm(
+        Maybe_{{typename}} * );
+
+
 bool
 maybe_{{funcname}}__is_nothing(
         Maybe_{{typename}} );
@@ -107,14 +122,14 @@ bool
 maybe_{{funcname}}__equal_by(
         Maybe_{{typename}} x,
         Maybe_{{typename}} y,
-        bool ( * f )( {{type}} xv, {{type}} yv ) );
+        bool ( * eq )( {{type}} xv, {{type}} yv ) );
 
 
 ord
 maybe_{{funcname}}__compare_by(
         Maybe_{{typename}} x,
         Maybe_{{typename}} y,
-        ord ( * f )( {{type}} xv, {{type}} yv ) );
+        ord ( * cmp )( {{type}} xv, {{type}} yv ) );
 
 
 

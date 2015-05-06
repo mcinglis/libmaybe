@@ -154,6 +154,32 @@ test_maybe_ptr_ptr_char( void )
 }
 
 
+static
+void
+test_pointer_conversions( void )
+{
+    Maybe_ulong const mx = maybe_ulong__from_ptr( &( ulong ){ 5 } );
+    ASSERT( mx.nothing == false, mx.value == 5 );
+    Maybe_ulong const my = maybe_ulong__from_ptr( NULL );
+    ASSERT( my.nothing == true, my.value == 0 );
+    Maybe_ulong const mz = maybe_ulong__from_ptr( &( ulong ){ 123 } );
+    ASSERT( mz.nothing == false, mz.value == 123 );
+    ulong const * const px = maybe_ulong__to_ptr( &mx );
+    ASSERT( px != NULL, *px == 5 );
+    ulong const * const py = maybe_ulong__to_ptr( &my );
+    ASSERT( py == NULL );
+    ulong const * const pz = maybe_ulong__to_ptr( &mz );
+    ASSERT( pz != NULL, *pz == 123 );
+
+    Maybe_ulong ma = { .value = 42 };
+    ulong * const pa = maybe_ulong__to_ptrm( &ma );
+    ASSERT( pa != NULL, *pa == 42, pa == &ma.value );
+    Maybe_ulong mb = { .nothing = true };
+    ulong * const pb = maybe_ulong__to_ptrm( &mb );
+    ASSERT( pb == NULL );
+}
+
+
 int
 main( void )
 {
@@ -163,5 +189,8 @@ main( void )
     printf( "All `intmax` assertions passed.\n" );
     test_maybe_ptr_ptr_char();
     printf( "All `ptr_ptr_char` assertions passed.\n" );
+    printf( "Running unit tests...\n" );
+    test_pointer_conversions();
+    printf( "  pointer conversion tests passed!\n" );
 }
 

@@ -69,6 +69,35 @@ maybe_{{funcname}}__value(
 }
 
 
+Maybe_{{typename}}
+maybe_{{funcname}}__from_ptr(
+        {{type}} const * const x )
+{
+    return ( x == NULL ) ? ( Maybe_{{typename}} ){ .nothing = true }
+                         : ( Maybe_{{typename}} ){ .value = *x };
+}
+
+
+{{type}} const *
+maybe_{{funcname}}__to_ptr(
+        Maybe_{{typename}} const * const m )
+{
+    ASSERT( m != NULL );
+
+    return m->nothing ? NULL : &m->value;
+}
+
+
+{{type}} *
+maybe_{{funcname}}__to_ptrm(
+        Maybe_{{typename}} * const m )
+{
+    ASSERT( m != NULL );
+
+    return m->nothing ? NULL : &m->value;
+}
+
+
 bool
 maybe_{{funcname}}__is_nothing(
         Maybe_{{typename}} const m )
@@ -148,13 +177,13 @@ bool
 maybe_{{funcname}}__equal_by(
         Maybe_{{typename}} const x,
         Maybe_{{typename}} const y,
-        bool ( * const f )( {{type}} xv, {{type}} yv ) )
+        bool ( * const eq )( {{type}} xv, {{type}} yv ) )
 {
-    ASSERT( f != NULL );
+    ASSERT( eq != NULL );
 
     return ( x.nothing != y.nothing ) ? false
          : ( x.nothing && y.nothing ) ? true
-                                      : f( x.value, y.value );
+                                      : eq( x.value, y.value );
 }
 
 
@@ -162,11 +191,11 @@ ord
 maybe_{{funcname}}__compare_by(
         Maybe_{{typename}} const x,
         Maybe_{{typename}} const y,
-        ord ( * const f )( {{type}} xv, {{type}} yv ) )
+        ord ( * const cmp )( {{type}} xv, {{type}} yv ) )
 {
-    ASSERT( f != NULL );
+    ASSERT( cmp != NULL );
 
-    return ( !x.nothing && !y.nothing ) ? f( x.value, y.value )
+    return ( !x.nothing && !y.nothing ) ? cmp( x.value, y.value )
                                         : y.nothing - x.nothing;
 }
 
