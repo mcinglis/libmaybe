@@ -38,7 +38,7 @@ test_libbase_sources := $(foreach t,$(test_libbase_types),$(LIBBASE)/$t.c)
 test_libbase_headers := $(test_libbase_sources:.c=.h)
 test_libbase_objects := $(test_libbase_sources:.c=.o)
 
-test_libmaybe_sources := $(foreach t,$(test_libmaybe_types),maybe-$t.c)
+test_libmaybe_sources := $(foreach t,$(test_libmaybe_types),maybe_$t.c)
 test_libmaybe_headers := $(test_libmaybe_sources:.c=.h)
 test_libmaybe_defs    := $(addprefix def/,$(test_libmaybe_headers))
 test_libmaybe_objects := $(test_libmaybe_sources:.c=.o)
@@ -96,19 +96,19 @@ $(test_libbase_sources): $(LIBBASE)/%.c: $(LIBBASE)/source.c.jinja
 
 $(test_libbase_objects): $(LIBBASE)/%.o: $(LIBBASE)/%.h
 
-$(test_libmaybe_defs): def/maybe-%.h: def.h.jinja
+$(test_libmaybe_defs): def/maybe_%.h: def.h.jinja
 	$(eval n := $(call name_from_path,$*))
 	$(TPLRENDER) $< "$($(n)_type)" $($(n)_options) -o $@
 
-$(test_libmaybe_headers): maybe-%.h: header.h.jinja
+$(test_libmaybe_headers): maybe_%.h: header.h.jinja
 	$(eval n := $(call name_from_path,$*))
 	$(TPLRENDER) $< "$($(n)_type)" $($(n)_options) -o $@
 
-$(test_libmaybe_sources): maybe-%.c: source.c.jinja
+$(test_libmaybe_sources): maybe_%.c: source.c.jinja
 	$(eval n := $(call name_from_path,$*))
 	$(TPLRENDER) $< "$($(n)_type)" $($(n)_options) --sys-headers "libbase/$*.h" -o $@
 
-$(test_libmaybe_objects): maybe-%.o: maybe-%.h def/maybe-%.h $(LIBBASE)/%.h
+$(test_libmaybe_objects): maybe_%.o: maybe_%.h def/maybe_%.h $(LIBBASE)/%.h
 
 
 -include $(mkdeps)

@@ -6,9 +6,9 @@
 #include <libbase/ulong.h>
 #include <libbase/intmax.h>
 
-#include "../maybe-ulong.h"
-#include "../maybe-intmax.h"
-#include "../maybe-ptr-ptr-char.h"
+#include "../maybe_ulong.h"
+#include "../maybe_intmax.h"
+#include "../maybe_ptr-ptr-char.h"
 
 
 static
