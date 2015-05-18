@@ -87,7 +87,12 @@ maybe_{{funcname}}__is_value(
 
 
 {{type}}
-maybe_{{funcname}}__value_or(
+maybe_{{funcname}}__unwrap(
+        Maybe_{{typename}} );
+
+
+{{type}}
+maybe_{{funcname}}__unwrap_or(
         Maybe_{{typename}},
         {{type}} or );
 
@@ -116,6 +121,18 @@ maybe_{{funcname}}__apply2(
         Maybe_{{typename}} *,
         Maybe_{{typename}},
         {{type}} ( * f )( {{type}}, {{type}} ) );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__and(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__or(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
 
 
 bool

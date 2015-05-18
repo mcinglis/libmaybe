@@ -115,7 +115,17 @@ maybe_{{funcname}}__is_value(
 
 
 {{type}}
-maybe_{{funcname}}__value_or(
+maybe_{{funcname}}__unwrap(
+        Maybe_{{typename}} const m )
+{
+    ASSERT( maybe_{{funcname}}__is_value( m ) );
+
+    return m.value;
+}
+
+
+{{type}}
+maybe_{{funcname}}__unwrap_or(
         Maybe_{{typename}} const m,
         {{type}} const or )
 {
@@ -170,6 +180,24 @@ maybe_{{funcname}}__apply2(
     ASSERT( x != NULL, f != NULL );
 
     *x = maybe_{{funcname}}__applied2( *x, y, f );
+}
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__and(
+        Maybe_{{typename}} const x,
+        Maybe_{{typename}} const y )
+{
+    return x.nothing ? x : y;
+}
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__or(
+        Maybe_{{typename}} const x,
+        Maybe_{{typename}} const y )
+{
+    return x.nothing ? y : x;
 }
 
 
