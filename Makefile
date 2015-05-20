@@ -24,15 +24,15 @@ libmaybe_types := ulong intmax ptr_ptr_char
 libbase_types := $(libmaybe_types)
 
 ulong_type           := ulong
-ulong_options        := --typeclasses BOUNDED EQ ORD ENUM NUM \
+ulong_options        := --typeclasses NULL BOUNDED EQ ORD ENUM NUM \
                         --extra num_type=unsigned
 
 intmax_type          := intmax_t
-intmax_options       := --typeclasses BOUNDED EQ ORD ENUM NUM \
+intmax_options       := --typeclasses NULL BOUNDED EQ ORD ENUM NUM \
                         --extra num_type=signed
 
 ptr_ptr_char_type    := char const * const *
-ptr_ptr_char_options := --typeclasses EQ ORD
+ptr_ptr_char_options := --typeclasses NULL EQ ORD
 
 libbase_sources := $(foreach t,$(libbase_types),$(LIBBASE)/$t.c)
 libbase_headers := $(libbase_sources:.c=.h)
