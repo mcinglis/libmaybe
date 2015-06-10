@@ -24,11 +24,11 @@ libmaybe_types := ulong intmax ptr_ptr_char
 libbase_types := $(libmaybe_types)
 
 ulong_type           := ulong
-ulong_options        := --typeclasses NULL BOUNDED EQ ORD ENUM NUM \
+ulong_options        := --typeclasses NULL BOUNDED EQ ORD ENUM NUM FROM_STR \
                         --extra num_type=unsigned
 
 intmax_type          := intmax_t
-intmax_options       := --typeclasses NULL BOUNDED EQ ORD ENUM NUM \
+intmax_options       := --typeclasses NULL BOUNDED EQ ORD ENUM NUM FROM_STR \
                         --extra num_type=signed
 
 ptr_ptr_char_type    := char const * const *

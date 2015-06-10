@@ -150,21 +150,9 @@ maybe_{{funcname}}__compare_by(
 
 
 
-{% macro typeclass_header(name) -%}
-///////////////////////////////////
-/// TYPECLASS: {{name}}
-///////////////////////////////////
-{%- endmacro %}
 
-{% macro typeclass(name) -%}
-{% if name in typeclasses %}
-{{ typeclass_header(name) }}
-{{ caller() }}
-{% endif %}
-{%- endmacro %}
+{% if 'EQ' in typeclasses %}
 
-
-{% call typeclass('EQ') %}
 
 bool
 maybe_{{funcname}}__equal(
@@ -177,9 +165,14 @@ maybe_{{funcname}}__not_equal(
         Maybe_{{typename}},
         Maybe_{{typename}} );
 
-{% endcall %}
 
-{% call typeclass('ORD') %}
+{% endif %} {# 'EQ' in typeclasses #}
+
+
+
+
+{% if 'ORD' in typeclasses%}
+
 
 ord
 maybe_{{funcname}}__compare(
@@ -269,9 +262,31 @@ maybe_{{funcname}}__in_xrange(
         Maybe_{{typename}} upper,
         Maybe_{{typename}} x );
 
-{% endcall %}
+
+{% endif %} {# 'ORD' in typeclasses #}
+
+
+
+
+{% if 'FROM_STR' in typeclasses %}
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__from_str(
+        char const * str );
+
+
+void
+maybe_{{funcname}}__argparse(
+        char const * name,
+        char const * value,
+        void * vmaybe );
+
+
+{% endif %} {# 'FROM_STR' in typeclasses #}
+
+
 
 
 #endif // ifndef LIBMAYBE_MAYBE_{{macroname}}_H
-
 
