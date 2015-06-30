@@ -391,6 +391,38 @@ maybe_{{funcname}}__in_xrange(
 
 
 
+{% if 'FLOAT' in typeclasses %}
+
+
+bool
+maybe_{{funcname}}__equal_e(
+        Maybe_{{type}} const x,
+        Maybe_{{type}} const y,
+        {{type}} const epsilon )
+{
+    return ( x.nothing != y.nothing ) ? false
+         : ( x.nothing && y.nothing ) ? true
+         : {{funcname}}__equal_e( x.value, y.value, epsilon );
+}
+
+
+Maybe_{{type}}
+maybe_{{funcname}}__update_average(
+        Maybe_{{type}} const avg,
+        size_t const n,
+        Maybe_{{type}} const add )
+{
+    return avg.nothing ? add
+         : add.nothing ? avg
+         : {{funcname}}__update_average( avg.value, n, add.value );
+}
+
+
+{% endif %}
+
+
+
+
 {% if 'FROM_STR' in typeclasses %}
 
 

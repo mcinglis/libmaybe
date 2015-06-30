@@ -2,6 +2,7 @@
 *.h
 *.o
 *.dep.mk
+*.swp
 tests/test
 !tests/test.c
 deps

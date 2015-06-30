@@ -266,6 +266,27 @@ maybe_{{funcname}}__in_xrange(
 {% endif %} {# 'ORD' in typeclasses #}
 
 
+{% if 'FLOAT' in typeclasses %}
+
+
+#include <libmacro/nelem.h>
+
+
+bool
+maybe_{{funcname}}__equal_e(
+        Maybe_{{type}} x,
+        Maybe_{{type}} y,
+        {{type}} epsilon );
+
+
+Maybe_{{type}}
+maybe_{{funcname}}__update_average(
+        Maybe_{{type}} average,
+        size_t num_samples,
+        Maybe_{{type}} addition );
+
+
+{% endif %}
 
 
 {% if 'FROM_STR' in typeclasses %}
