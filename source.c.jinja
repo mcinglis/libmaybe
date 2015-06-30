@@ -414,7 +414,9 @@ maybe_{{funcname}}__update_average(
 {
     return avg.nothing ? add
          : add.nothing ? avg
-         : {{funcname}}__update_average( avg.value, n, add.value );
+         : ( Maybe_{{typename}} ){
+               .value = {{funcname}}__update_average(
+                            avg.value, n, add.value ) };
 }
 
 

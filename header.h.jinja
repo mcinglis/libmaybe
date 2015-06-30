@@ -266,6 +266,8 @@ maybe_{{funcname}}__in_xrange(
 {% endif %} {# 'ORD' in typeclasses #}
 
 
+
+
 {% if 'FLOAT' in typeclasses %}
 
 
@@ -286,7 +288,9 @@ maybe_{{funcname}}__update_average(
         Maybe_{{type}} addition );
 
 
-{% endif %}
+{% endif %} {# 'FLOAT' in typeclasses #}
+
+
 
 
 {% if 'FROM_STR' in typeclasses %}

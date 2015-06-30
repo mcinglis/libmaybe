@@ -20,19 +20,27 @@ CFLAGS ?= -std=c11 -g \
 TPLRENDER ?= $(DEPS_DIR)/tplrender/tplrender
 
 
-libmaybe_types := ulong intmax ptr_ptr_char
+libmaybe_types := ulong intmax double ptr_ptr_char
 libbase_types := $(libmaybe_types)
 
-ulong_type           := ulong
-ulong_options        := --typeclasses NULL BOUNDED EQ ORD ENUM NUM FROM_STR \
-                        --extra num_type=unsigned
+ulong_type := ulong
+ulong_options := \
+    --typeclasses NULL BOUNDED EQ ORD ENUM NUM FROM_STR \
+    --extra num_type=unsigned
 
-intmax_type          := intmax_t
-intmax_options       := --typeclasses NULL BOUNDED EQ ORD ENUM NUM FROM_STR \
-                        --extra num_type=signed
+intmax_type := intmax_t
+intmax_options := \
+    --typeclasses NULL BOUNDED EQ ORD ENUM NUM FROM_STR \
+    --extra num_type=signed
 
-ptr_ptr_char_type    := char const * const *
-ptr_ptr_char_options := --typeclasses NULL EQ ORD
+double_type := double
+double_options := \
+    --typeclasses NULL EQ ORD NUM FLOAT FROM_STR TO_STRM \
+    --extra num_type=float
+
+ptr_ptr_char_type := char const * const *
+ptr_ptr_char_options := \
+    --typeclasses NULL EQ ORD
 
 libbase_sources := $(foreach t,$(libbase_types),$(LIBBASE)/$t.c)
 libbase_headers := $(libbase_sources:.c=.h)
