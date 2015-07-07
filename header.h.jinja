@@ -268,6 +268,44 @@ maybe_{{funcname}}__in_xrange(
 
 
 
+{% if 'NUM' in typeclasses %}
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__add(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__sub(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__mul(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__div(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__mod(
+        Maybe_{{typename}},
+        Maybe_{{typename}} );
+
+
+{% endif %} {# 'NUM' in typeclasses #}
+
+
+
+
 {% if 'FLOAT' in typeclasses %}
 
 

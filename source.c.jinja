@@ -391,6 +391,74 @@ maybe_{{funcname}}__in_xrange(
 
 
 
+{% if 'NUM' in typeclasses %}
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__add(
+        Maybe_{{typename}} const x,
+        Maybe_{{typename}} const y )
+{
+    return x.nothing ? y
+         : y.nothing ? x
+         : ( Maybe_{{typename}} ){
+               .value = {{funcname}}__add( x.value, y.value ) };
+}
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__sub(
+        Maybe_{{typename}} const x,
+        Maybe_{{typename}} const y )
+{
+    return x.nothing ? y
+         : y.nothing ? x
+         : ( Maybe_{{typename}} ){
+               .value = {{funcname}}__sub( x.value, y.value ) };
+}
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__mul(
+        Maybe_{{typename}} const x,
+        Maybe_{{typename}} const y )
+{
+    return x.nothing ? y
+         : y.nothing ? x
+         : ( Maybe_{{typename}} ){
+               .value = {{funcname}}__mul( x.value, y.value ) };
+}
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__div(
+        Maybe_{{typename}} const x,
+        Maybe_{{typename}} const y )
+{
+    return x.nothing ? y
+         : y.nothing ? x
+         : ( Maybe_{{typename}} ){
+               .value = {{funcname}}__div( x.value, y.value ) };
+}
+
+
+Maybe_{{typename}}
+maybe_{{funcname}}__mod(
+        Maybe_{{typename}} const x,
+        Maybe_{{typename}} const y )
+{
+    return x.nothing ? y
+         : y.nothing ? x
+         : ( Maybe_{{typename}} ){
+               .value = {{funcname}}__mod( x.value, y.value ) };
+}
+
+
+{% endif %} {# 'NUM' in typeclasses #}
+
+
+
+
 {% if 'FLOAT' in typeclasses %}
 
 

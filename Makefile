@@ -25,12 +25,12 @@ libbase_types := $(libmaybe_types)
 
 ulong_type := ulong
 ulong_options := \
-    --typeclasses NULL BOUNDED EQ ORD ENUM NUM FROM_STR \
+    --typeclasses NULL BOUNDED EQ ORD ENUM NUM INTEGER FROM_STR TO_STRM \
     --extra num_type=unsigned
 
 intmax_type := intmax_t
 intmax_options := \
-    --typeclasses NULL BOUNDED EQ ORD ENUM NUM FROM_STR \
+    --typeclasses NULL BOUNDED EQ ORD ENUM NUM INTEGER FROM_STR TO_STRM \
     --extra num_type=signed
 
 double_type := double
